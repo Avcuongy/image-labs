@@ -13,7 +13,7 @@ while hasFrame(video)
     frames{count} = gray;
 end
 
-fprintf('Total frames: %d\n', count);
+%fprintf('Total frames: %d\n', count);
 
 
 % padding
@@ -40,6 +40,8 @@ function [result, mean_values] = smooth_marked_pixels(frame, mask)
     result = frame;
     [h, w] = size(frame);
     mean_values = []; % lưu giá trị trung bình
+    max_print = 20; % số pixel muốn in
+    printed = 0; % bộ đếm
 
     for i = 1:h
         for j = 1:w
@@ -48,9 +50,21 @@ function [result, mean_values] = smooth_marked_pixels(frame, mask)
                 window = padded(i:i+4, j:j+4);
                 
                 % tính trung bình
-                m = mean(sub_window(:));
+                m = mean(window(:));
 
-                result(i,j) = m;
+                % In thông tin
+                if printed < max_print
+                    fprintf('Pixel (%d,%d): original = %d, mean = %.2f\n', ...
+                            i, j, frame(i,j), m);
+
+                    disp('Window 5x5:');
+                    disp(window);
+                    fprintf('-------------------------\n');
+
+                    printed = printed + 1;
+                end
+
+                result(i,j) = uint8(m);
                 mean_values(end+1) = m;
             end
         end
@@ -60,7 +74,7 @@ end
 
 frame = frames{10};   % lấy frame
 
-mask = random_mask(size(frame), 0.1);
+mask = random_mask(size(frame), 0.05);
 
 [smoothed, mean_vals] = smooth_marked_pixels(frame, mask);
 

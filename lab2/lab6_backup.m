@@ -13,7 +13,7 @@ while hasFrame(video)
     frames{count} = gray;
 end
 
-fprintf('Total frames: %d\n', count);
+%fprintf('Total frames: %d\n', count);
 
 
 % padding
@@ -47,7 +47,7 @@ function [result, mean_values] = smooth_padding_original_only(frame, mask)
                 
                 % Window 5x5 trên padded
                 window = padded(i:i+4, j:j+4);
-                
+
                 % Xác định vùng hợp lệ trong ảnh gốc
                 r1 = max(1, i-2);
                 r2 = min(h, i+2);
@@ -74,6 +74,50 @@ function [result, mean_values] = smooth_padding_original_only(frame, mask)
     end
 end
 
+function print_zero_padded_windows(frame, mask, max_print)
+
+    [h, w] = size(frame);
+    printed = 0;
+
+    for i = 1:h
+        for j = 1:w
+            % Not border
+            %not_border = (i > 2) && (i < h-1) && (j > 2) && (j < w-1);
+
+            if mask(i,j) % && not_border
+
+                % tạo window 5x5 zero-padding nếu ở biên
+                window = zeros(5,5);
+
+                for u = -2:2
+                    for v = -2:2
+                        r = i + u;
+                        c = j + v;
+
+                        if r >= 1 && r <= h && c >= 1 && c <= w
+                            window(u+3, v+3) = frame(r,c);
+                        else
+                            window(u+3, v+3) = 0;
+                        end
+                    end
+                end
+
+                % in thông tin
+                fprintf('Pixel (%d,%d): original = %d\n', i, j, frame(i,j));
+                disp('Window 5x5 (zero-padded):');
+                disp(window);
+                fprintf('-------------------------\n');
+
+                printed = printed + 1;
+
+                if printed >= max_print
+                    return;
+                end
+            end
+        end
+    end
+end
+
 frame = frames{10};   % lấy frame
 
 mask = random_mask(size(frame), 0.1);
@@ -94,3 +138,5 @@ title('Before');
 subplot(1,2,2);
 histogram(new_vals, 256);
 title('After');
+
+print_zero_padded_windows(frame, mask, 100);
