@@ -34,6 +34,17 @@ diff_10 = frame_subtraction(frames, 10);
 diff_15 = frame_subtraction(frames, 15);
 
 figure;
-subplot(1,3,1); imshow(diff_5{1});  title('k = 5');
-subplot(1,3,2); imshow(diff_10{1}); title('k = 10');
-subplot(1,3,3); imshow(diff_15{1}); title('k = 15');
+% k = 5
+subplot(3,3,1); imshow(frames{6}); title('k=5');
+subplot(3,3,2); imshow(frames{1}); title('Reference');
+subplot(3,3,3); imshow(diff_5{1}); title('Diff');
+
+% k = 10
+subplot(3,3,4); imshow(frames{11}); title('k=10');
+subplot(3,3,5); imshow(frames{1}); title('Reference');
+subplot(3,3,6); imshow(diff_10{1}); title('Diff');
+
+% k = 15
+subplot(3,3,7); imshow(frames{16}); title('k=15');
+subplot(3,3,8); imshow(frames{1}); title('Reference');
+subplot(3,3,9); imshow(diff_15{1}); title('Diff');
