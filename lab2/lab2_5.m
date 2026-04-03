@@ -2,7 +2,8 @@ clc; clear; close all;
 
 video = VideoReader('sample.avi');
 
-frames = {}; % mỗi phần tử là 1 ảnh 2D
+frames = {};
+enhanced_frames = {};
 count = 0;
 
 while hasFrame(video)
@@ -11,26 +12,32 @@ while hasFrame(video)
     
     count = count + 1;
     frames{count} = gray;
+
+    % áp dụng CLAHE ngay
+    enhanced_frames{count} = adapthisteq(gray);
 end
 
 fprintf('Total frames: %d\n', count);
 
-% 5. adapthisteq
-enhanced_frames = {};
-
-% Áp dụng từng frame
-for i = 1:length(frames)
-    enhanced_frames{i} = adapthisteq(frames{i});
-end
-
+% chọn frame
 idx = 10;
 
 figure;
 
-subplot(1,2,1);
-imhist(frames{idx});
+% ảnh
+subplot(2,2,1);
+imshow(frames{idx});
 title('Before');
 
-subplot(1,2,2);
-imhist(enhanced_frames{idx});
+subplot(2,2,2);
+imshow(enhanced_frames{idx});
 title('After adapthisteq');
+
+% hist
+subplot(2,2,3);
+imhist(frames{idx});
+title('Histogram Before');
+
+subplot(2,2,4);
+imhist(enhanced_frames{idx});
+title('Histogram After');
