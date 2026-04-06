@@ -46,8 +46,19 @@ figure;
 %imshowpair(frames{3}, smooth_frames{1}, 'montage');
 %title('Before vs After (Temporal Smoothing)');
 
-for k = 1:3
+%for k = 1:5
+%    figure;
+%    imshowpair(frames{k+2}, smooth_frames{k}, 'montage');
+%    title(['Frame ', num2str(k)]);
+%end
+
+for k = 1:5
+    original = frames{k+2};
+    smooth = smooth_frames{k};
+    diff = uint8(abs(double(original) - double(smooth)));
+    
     figure;
-    imshowpair(frames{k+2}, smooth_frames{k}, 'montage');
-    title(['Frame ', num2str(k)]);
+    subplot(1,3,1); imshow(original); title('Original');
+    subplot(1,3,2); imshow(smooth); title('Smoothed');
+    subplot(1,3,3); imshow(diff); title('Difference');
 end

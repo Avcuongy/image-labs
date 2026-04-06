@@ -139,4 +139,8 @@ subplot(1,2,2);
 histogram(new_vals, 256);
 title('After');
 
+figure;
+imshowpair(frame, smoothed, 'montage');
+title('Before vs After');
+
 print_zero_padded_windows(frame, mask, 100);
