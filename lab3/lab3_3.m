@@ -2,11 +2,11 @@ clc; clear; close all;
 
 %% load 
 % thử Peppers.png
-img = imread("coins.png");
+img = imread('british-coins.jpg');
 
 % convert sang RGB giả
-rgb = repmat(img, [1 1 3]);
-%rgb = img
+%rgb = repmat(img, [1 1 3]);
+rgb = img
 
 % grayscale chuẩn
 gray1 = rgb2gray(rgb);
