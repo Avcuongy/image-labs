@@ -9,6 +9,8 @@ else
     gray = img;
 end
 
+fprintf('\nImage: %s\n', imgPath)
+
 %% FILTERS
 med        = medfilt2(gray, [3 3]);
 gauss      = imgaussfilt(gray, 1.5);

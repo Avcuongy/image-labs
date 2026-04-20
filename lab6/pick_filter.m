@@ -83,7 +83,7 @@ end
 score = (0.6 * meanConf + 0.2 * medianConf + 0.2 * lenScore) * penalty * 100;
 
 %% OUTPUT
-fprintf('\n');
+fprintf('\nImage: %s\n', imgPath)
 fprintf('\nFILTER: %s\n', selectedName);
 fprintf('\n');
 fprintf('Score: %.2f%%\n', score);
