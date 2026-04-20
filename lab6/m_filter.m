@@ -100,6 +100,5 @@ scores = cell2mat(results(:,3));
 fprintf('\nBEST: %s (%.2f%%)\n', ...
     filterNames{bestIdx}, scores(bestIdx));
 fprintf('\n')
-fprintf('TEXT:\n%s\n', results{bestIdx,2});
 
 end
